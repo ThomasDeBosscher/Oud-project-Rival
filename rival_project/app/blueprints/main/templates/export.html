@@ -3,10 +3,10 @@
 {% block title %}Export Data{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Export Data</h1>
+        <div class="container">
+            <h1>Rapporten en data-export</h1>
         <section>
-            <h2>Select Export Format</h2>
+            <h2>Exporteer baseline report</h2>
             <form action="#" method="post" onsubmit="event.preventDefault(); alert('Export started (demo)');">
                 <label for="format">Choose a format:</label>
                 <select name="format" id="format">
@@ -17,8 +17,16 @@
                 <button type="submit">Export</button>
             </form>
         </section>
-        <section>
-            <h2>Export History</h2>
+            <section>
+                <h2>Datafeeds en API</h2>
+                <p>Integreer Rival-data met BI-tools.</p>
+            </section>
+            <section>
+                <h2>Audit trail export</h2>
+                <p>Voor naleving en compliance.</p>
+            </section>
+            <section>
+                <h2>Export History</h2>
             <table>
                 <thead>
                     <tr>

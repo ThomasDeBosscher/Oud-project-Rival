@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Company {{ company_id }}{% endblock %}
+{% block title %}Rival.com — Bedrijvenanalyse{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Company #{{ company_id }}</h1>
-        <div class="company-info">
-            <p><strong>Description:</strong> Demo company for ID {{ company_id }}.</p>
-            <p><strong>Founded:</strong> —</p>
-            <p><strong>Location:</strong> —</p>
-            <p><strong>Website:</strong> —</p>
-        </div>
+        <div class="container">
+            <h1>Bedrijvenanalyse</h1>
+            <section>
+                <h2>Voer een bedrijfs-URL in</h2>
+                <p>Start automatische data-analyse (demo). Bedrijf ID: {{ company_id }}</p>
+            </section>
+            <section class="company-info">
+                <h2>Bedrijfsprofiel</h2>
+                <p><strong>HQ:</strong> —</p>
+                <p><strong>Teamgrootte:</strong> —</p>
+                <p><strong>Fundinggeschiedenis:</strong> —</p>
+                <p><strong>Kernactiviteit:</strong> —</p>
+            </section>
+            <section>
+                <h2>Traction signals</h2>
+                <ul>
+                    <li>Groeisignalen (demo)</li>
+                    <li>Nieuws (demo)</li>
+                    <li>Recente ontwikkelingen (demo)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Vergelijkbare bedrijven</h2>
+                <p>Automatische detectie van concurrenten (demo).</p>
+            </section>
         <div class="actions">
             <a href="{{ url_for('main.index') }}" class="btn">Back to Home</a>
             <a href="{{ url_for('main.compare') }}" class="btn">Compare</a>

@@ -1,18 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>Alerts</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Rival.com — Waarschuwingen en meldingen{% endblock %}
+
+{% block content %}
     <div class="container">
-        <h1>Alerts</h1>
+        <h1>Waarschuwingen en meldingen</h1>
+        <section>
+            <h2>Belangrijke gebeurtenissen</h2>
+            <p>Nieuwe funding, productlancering, grote aanwervingen.</p>
+        </section>
+        <section>
+            <h2>Pushmeldingen</h2>
+            <p>Realtime updates (demo).</p>
+        </section>
+        <section>
+            <h2>Instellingen voor waarschuwingen</h2>
+            <p>Bepaal frequentie en type signalen.</p>
+        </section>
         <div class="alert-list">
             {% for alert in alerts %}
                 <div class="alert">
-                    <h2>{{ alert.title }}</h2>
+                    <h3>{{ alert.title }}</h3>
                     <p>{{ alert.message }}</p>
                     <span class="alert-date">{{ alert.date }}</span>
                 </div>
@@ -21,5 +29,4 @@
             {% endfor %}
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

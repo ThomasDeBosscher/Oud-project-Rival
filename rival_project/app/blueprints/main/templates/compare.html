@@ -1,46 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Rival.com — Vergelijk concurrenten{% endblock %}
+
+{% block content %}
     <div class="container">
-        <header>
-            <h1>Comparison Page</h1>
-        </header>
-        <main>
-            <section class="comparison-section">
-                <h2>Compare Items</h2>
-                <form action="{{ url_for('main.compare') }}" method="POST">
-                    <div class="form-group">
-                        <label for="item1">Select First Item:</label>
-                        <select name="item1" id="item1" required>
-                            <option value="">--Select Item--</option>
-                            <!-- Add options dynamically here -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="item2">Select Second Item:</label>
-                        <select name="item2" id="item2" required>
-                            <option value="">--Select Item--</option>
-                            <!-- Add options dynamically here -->
-                        </select>
-                    </div>
-                    <button type="submit">Compare</button>
-                </form>
-            </section>
-            <section class="results-section">
-                <h2>Comparison Results</h2>
-                <!-- Display comparison results here -->
-            </section>
-        </main>
-        <footer>
-            <p>&copy; 2025 Your Company Name</p>
-        </footer>
+        <h1>Vergelijk concurrenten</h1>
+        <section class="comparison-section">
+            <h2>Selecteer bedrijven om te vergelijken.</h2>
+            <form action="#" method="get">
+                <div class="form-group">
+                    <label for="item1">Eerste bedrijf</label>
+                    <select name="item1" id="item1" required>
+                        <option value="">--Kies--</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item2">Tweede bedrijf</label>
+                    <select name="item2" id="item2" required>
+                        <option value="">--Kies--</option>
+                    </select>
+                </div>
+                <button type="submit">Vergelijk</button>
+            </form>
+        </section>
+        <section class="results-section">
+            <h2>Feature comparison</h2>
+            <p>Functies, prijsstructuur, reviews (demo).</p>
+        </section>
+        <section>
+            <h2>Benchmarking tools</h2>
+            <p>Ontdek sterke en zwakke punten van elke speler (demo).</p>
+        </section>
+        <section>
+            <h2>Exporteren</h2>
+            <p>Download resultaten in PDF of slideformaat.</p>
+        </section>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+{% endblock %}

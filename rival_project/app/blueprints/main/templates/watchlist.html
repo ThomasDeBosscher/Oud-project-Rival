@@ -4,7 +4,19 @@
 
 {% block content %}
     <div class="container">
-        <h1>Your Watchlist</h1>
+        <h1>Mijn opvolglijst</h1>
+        <section>
+            <h2>Bewaarde bedrijven</h2>
+            <p>De ondernemingen die je actief volgt.</p>
+        </section>
+        <section>
+            <h2>Automatische updates</h2>
+            <p>Wekelijkse data-refresh en alerts.</p>
+        </section>
+        <section>
+            <h2>Ontdek vergelijkbare bedrijven</h2>
+            <p>Suggesties voor verwante concurrenten.</p>
+        </section>
         <table class="watchlist-table">
             <thead>
                 <tr>
@@ -22,7 +34,7 @@
                             <button type="button" disabled title="Not implemented">Remove</button>
                         </td>
                     </tr>
-                {% else %}
+                        {% else %}
                     <tr>
                         <td colspan="3">Your watchlist is empty.</td>
                     </tr>

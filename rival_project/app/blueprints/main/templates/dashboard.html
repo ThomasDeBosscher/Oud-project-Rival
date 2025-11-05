@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Rival.com — Dashboard{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Dashboard</h1>
-        <section class="stats">
-            <h2>Your Statistics</h2>
+        <div class="container">
+            <h1>Overzicht van concurrentie-activiteit</h1>
+            <section class="stats">
+                <h2>Realtime inzichten</h2>
             <div class="stat-item">
                 <h3>Total Companies</h3>
                 <p>{{ total_companies or 0 }}</p>
@@ -16,12 +16,12 @@
                 <p>{{ active_alerts or 0 }}</p>
             </div>
             <div class="stat-item">
-                <h3>Recent Activities</h3>
+                    <h3>Snelle samenvatting</h3>
                 <p>{{ recent_activities or 0 }}</p>
             </div>
         </section>
-        <section class="recent-activities">
-            <h2>Recent Activities</h2>
+            <section class="recent-activities">
+                <h2>Mijn bedrijven</h2>
             <ul>
                 {% for activity in activities or [] %}
                     <li>{{ activity }}</li>

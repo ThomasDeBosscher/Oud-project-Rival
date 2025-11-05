@@ -1,30 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trends</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Rival.com — Markttrends en evoluties{% endblock %}
+
+{% block content %}
     <div class="container">
-        <header>
-            <h1>Trends Overview</h1>
-        </header>
-        <main>
-            <section class="trends">
-                <h2>Current Trends</h2>
-                <div id="trends-list">
-                    <!-- Placeholder for trends data -->
-                    <p>No trends available at the moment.</p>
-                </div>
-            </section>
-        </main>
-        <footer>
-            <p>&copy; 2025 Your Company Name</p>
-        </footer>
+        <h1>Markttrends en evoluties</h1>
+        <section class="trends">
+            <h2>Prijsontwikkeling over tijd</h2>
+            <p>Demo grafiek/placeholder</p>
+        </section>
+        <section>
+            <h2>Hiring trends en groei</h2>
+            <p>Demo grafiek/placeholder</p>
+        </section>
+        <section>
+            <h2>Reviewvolume en klanttevredenheid</h2>
+            <p>Demo grafiek/placeholder</p>
+        </section>
+        <section>
+            <h2>Detecteer patronen voor strategische beslissingen</h2>
+            <p>Beschrijving/placeholder</p>
+        </section>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-</html>
+{% endblock %}
