@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}Rival.com — Waarschuwingen en meldingen{% endblock %}
+{% block title %}Rival.com — Alerts and notifications{% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1>Waarschuwingen en meldingen</h1>
+    <h1>Alerts and notifications</h1>
         <section>
-            <h2>Belangrijke gebeurtenissen</h2>
-            <p>Nieuwe funding, productlancering, grote aanwervingen.</p>
+            <h2>Key events</h2>
+            <p>New funding, product launches, major hires.</p>
         </section>
         <section>
-            <h2>Pushmeldingen</h2>
-            <p>Realtime updates (demo).</p>
+            <h2>Push notifications</h2>
+            <p>Real-time updates (demo).</p>
         </section>
         <section>
-            <h2>Instellingen voor waarschuwingen</h2>
-            <p>Bepaal frequentie en type signalen.</p>
+            <h2>Alert settings</h2>
+            <p>Choose frequency and signal types.</p>
         </section>
         <div class="alert-list">
             {% for alert in alerts %}

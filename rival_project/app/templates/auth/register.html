@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Registreren | Rival Project{% endblock %}
+{% block title %}Register | Rival Project{% endblock %}
 
 {% block content %}
 <section class="auth">
   <div class="card">
-    <h2>Registreren</h2>
+  <h2>Register</h2>
     <form method="post" novalidate>
       {{ form.hidden_tag() }}
       <div class="field">
@@ -30,7 +30,7 @@
       </div>
       {{ form.submit(class_='btn') }}
     </form>
-    <p class="hint">Heb je al een account? <a href="{{ url_for('auth.login') }}">Inloggen</a></p>
+  <p class="hint">Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a></p>
   </div>
 </section>
 <style>

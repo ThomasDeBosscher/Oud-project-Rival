@@ -13,6 +13,9 @@
 <body>
     {% include 'components/navbar.html' %}
 
+    <!-- Subtle site-wide watermark -->
+    <img class="app-watermark" src="{{ url_for('static', filename='img/logo.png') }}" alt="" />
+
     <div class="layout">
         <aside class="layout-sidebar">
             {% include 'components/sidebar.html' %}

@@ -4,9 +4,9 @@
 
 {% block content %}
         <div class="container">
-            <h1>Overzicht van concurrentie-activiteit</h1>
+            <h1>Competitive activity overview</h1>
             <section class="stats">
-                <h2>Realtime inzichten</h2>
+                <h2>Real-time insights</h2>
             <div class="stat-item">
                 <h3>Total Companies</h3>
                 <p>{{ total_companies or 0 }}</p>
@@ -16,12 +16,12 @@
                 <p>{{ active_alerts or 0 }}</p>
             </div>
             <div class="stat-item">
-                    <h3>Snelle samenvatting</h3>
+                    <h3>Quick summary</h3>
                 <p>{{ recent_activities or 0 }}</p>
             </div>
         </section>
             <section class="recent-activities">
-                <h2>Mijn bedrijven</h2>
+                <h2>My companies</h2>
             <ul>
                 {% for activity in activities or [] %}
                     <li>{{ activity }}</li>

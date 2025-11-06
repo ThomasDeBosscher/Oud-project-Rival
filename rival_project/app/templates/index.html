@@ -6,14 +6,31 @@
 <section class="hero">
     <div class="container">
         <h1>Welcome to Rival.com</h1>
-        <p>Analyseer concurrenten in enkele seconden.</p>
-        <p>Plak een bedrijfs-URL en krijg onmiddellijk een baseline report.</p>
+        <p>Analyze competitors in seconds.</p>
+        <p>Paste a company URL and instantly get a baseline report.</p>
+        <div class="hero-media">
+            <img class="hero-image" src="{{ url_for('static', filename='img/Home.png') }}" alt="Rival.com hero" />
+        </div>
         <div class="cta-row">
-            <a class="btn" href="{{ url_for('main.dashboard') }}">Ga naar Dashboard</a>
+            <a class="btn" href="{{ url_for('main.dashboard') }}">Go to Dashboard</a>
             {% if not session.get('user_id') %}
-            <a class="btn secondary" href="{{ url_for('auth.login') }}">Log in om te starten</a>
+            <a class="btn secondary" href="{{ url_for('auth.login') }}">Log in to get started</a>
             {% endif %}
         </div>
+                <div class="card" style="margin-top:1rem;">
+                    <h3>Quick add by URL</h3>
+                                <form method="post" action="{{ url_for('main.quick_add_company') }}" novalidate>
+                                    {{ quick_form.hidden_tag() }}
+                                    <div class="field" style="display:flex; gap:.5rem; align-items:center;">
+                                        {{ quick_form.url(class_='input', placeholder='https://acme.com', style='flex:1;') }}
+                                        <label style="display:flex; align-items:center; gap:.25rem; white-space:nowrap;">
+                                            {{ quick_form.add_to_watchlist() }}
+                                            <span>{{ quick_form.add_to_watchlist.label.text }}</span>
+                                        </label>
+                                        <button class="btn" type="submit">{{ quick_form.submit.label.text }}</button>
+                                    </div>
+                                </form>
+                </div>
     </div>
 </section>
 {% endblock %}

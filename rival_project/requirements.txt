@@ -12,3 +12,4 @@ pandas
 numpy
 gunicorn
 python-dotenv
+yfinance
