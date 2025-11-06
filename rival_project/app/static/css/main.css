@@ -120,6 +120,17 @@ a:hover { text-decoration: underline; }
 .stat .label{ color: var(--muted); font-size:.85rem; margin-bottom:.2rem; }
 .stat .value{ font-weight:700; }
 
+/* Quick add form (homepage) */
+.quick-add{ display:grid; grid-template-columns: 1fr auto auto; gap:.6rem; align-items:center; margin-top:.5rem; }
+.quick-add .input{ width:100%; }
+.quick-add .ctrl{ display:flex; align-items:center; gap:.35rem; font-size:.85rem; color: var(--muted); }
+.quick-add input[type=checkbox]{ width:16px; height:16px; accent-color: var(--accent); }
+@media (max-width:700px){
+  .quick-add{ grid-template-columns: 1fr; }
+  .quick-add .ctrl{ order:3; }
+  .quick-add button{ width:100%; }
+}
+
 /* Tables (e.g., watchlist) */
 table { width:100%; border-collapse: collapse; background: var(--bg-elev); border:1px solid var(--border); border-radius: var(--radius); overflow:hidden; }
 th, td { padding:.75rem .8rem; border-bottom:1px solid var(--border); }

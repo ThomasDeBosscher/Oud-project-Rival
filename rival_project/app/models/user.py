@@ -8,6 +8,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    role = db.Column(db.String(20), nullable=True)  # Optionally map to friend's role semantics
     # watchlist_items relationship provided from Watchlist backref
 
     def __repr__(self):
@@ -18,3 +19,8 @@ class User(db.Model):
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
+
+    def has_role(self, *roles: str) -> bool:
+        if not self.role:
+            return False
+        return self.role in roles

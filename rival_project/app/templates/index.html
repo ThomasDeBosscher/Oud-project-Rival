@@ -17,18 +17,18 @@
             <a class="btn secondary" href="{{ url_for('auth.login') }}">Log in to get started</a>
             {% endif %}
         </div>
-                <div class="card" style="margin-top:1rem;">
+                        <div class="card" style="margin-top:1rem;">
                     <h3>Quick add by URL</h3>
                                 <form method="post" action="{{ url_for('main.quick_add_company') }}" novalidate>
                                     {{ quick_form.hidden_tag() }}
-                                    <div class="field" style="display:flex; gap:.5rem; align-items:center;">
-                                        {{ quick_form.url(class_='input', placeholder='https://acme.com', style='flex:1;') }}
-                                        <label style="display:flex; align-items:center; gap:.25rem; white-space:nowrap;">
-                                            {{ quick_form.add_to_watchlist() }}
-                                            <span>{{ quick_form.add_to_watchlist.label.text }}</span>
-                                        </label>
-                                        <button class="btn" type="submit">{{ quick_form.submit.label.text }}</button>
-                                    </div>
+                                <div class="quick-add">
+                                    {{ quick_form.url(class_='input', placeholder='https://acme.com') }}
+                                    <label class="ctrl">
+                                        {{ quick_form.add_to_watchlist() }}
+                                        <span>Add to watchlist</span>
+                                    </label>
+                                    <button class="btn" type="submit">Add</button>
+                                </div>
                                 </form>
                 </div>
     </div>

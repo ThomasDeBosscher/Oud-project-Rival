@@ -1,7 +1,13 @@
 from flask import Flask, session, g
+import os
 from app.config import Config
 from app.extensions import init_extensions, db
 from app.models.user import User
+from app.models.analytics import AppUser, Metric, Report, AuditLog, ChangeEvent
+from dotenv import load_dotenv
+
+# Load environment variables (e.g., DATABASE_URL, SECRET_KEY) from a .env file if present
+load_dotenv()
 
 def create_app(config_class: type = Config):
     app = Flask(__name__, static_folder="static", template_folder="templates")
@@ -11,7 +17,9 @@ def create_app(config_class: type = Config):
     init_extensions(app)
     # Ensure new tables (like CompanyFinance) exist without requiring an immediate migration run
     with app.app_context():
-        db.create_all()
+        # Prefer Alembic migrations; only fall back to create_all when no migrations present (fresh dev setup)
+        if not os.path.isdir(os.path.join(app.root_path, '..', 'migrations')):
+            db.create_all()
 
     # Blueprints
     from app.blueprints.main import init_app as init_main
