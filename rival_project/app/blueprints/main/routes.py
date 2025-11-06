@@ -178,6 +178,10 @@ def compare():
     f2 = ensure_fin(c2) if c2 else None
     return render_template('compare.html', companies=companies, c1=c1, c2=c2, f1=f1, f2=f2)
 
+@bp.route('/features')
+def features():
+    return render_template('features.html')
+
 
 @bp.route('/company/<int:company_id>/price-history.json')
 def company_price_history(company_id):
