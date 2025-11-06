@@ -43,6 +43,14 @@
                 <p>No financial data available yet.</p>
                 {% endif %}
             </section>
+
+            <section class="card" style="margin:1rem 0;">
+                <h2>Stock price (last 3 months)</h2>
+                <div class="chart-wrap">
+                    <canvas id="priceChart" height="120"></canvas>
+                </div>
+                <div class="text-muted" id="chartFallback" style="display:none;">No chart data available.</div>
+            </section>
             <section class="card" style="margin:1rem 0;">
                 <h2>Set ticker manually</h2>
                 <p class="text-muted">If automatic lookup can’t find data, specify the exchange symbol (e.g., AAPL, MSFT, GOOGL).</p>
@@ -71,4 +79,49 @@
             <a href="{{ url_for('main.compare') }}" class="btn">Compare</a>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    (async function(){
+        try{
+            const res = await fetch("{{ url_for('main.company_price_history', company_id=company.id) }}", { cache: "no-store" });
+            const data = await res.json();
+            const labels = data.labels || [];
+            const prices = data.prices || [];
+            if(!labels.length || !prices.length){
+                document.getElementById('chartFallback').style.display = 'block';
+                return;
+            }
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: (data.ticker || 'Price'),
+                        data: prices,
+                        borderColor: '#8fb3ff',
+                        backgroundColor: 'rgba(143,179,255,0.15)',
+                        tension: 0.25,
+                        pointRadius: 0,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#9fb3c8' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#9fb3c8' } }
+                    },
+                    plugins: { legend: { labels: { color: '#e6edf3' } } }
+                }
+            });
+        }catch(e){
+            document.getElementById('chartFallback').style.display = 'block';
+        }
+    })();
+</script>
 {% endblock %}

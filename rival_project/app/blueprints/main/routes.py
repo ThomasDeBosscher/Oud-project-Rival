@@ -178,6 +178,35 @@ def compare():
     f2 = ensure_fin(c2) if c2 else None
     return render_template('compare.html', companies=companies, c1=c1, c2=c2, f1=f1, f2=f2)
 
+
+@bp.route('/company/<int:company_id>/price-history.json')
+def company_price_history(company_id):
+    company = Company.query.get_or_404(company_id)
+    # Require a ticker; try to resolve if missing
+    snap = CompanyFinance.query.filter_by(company_id=company.id).first()
+    ticker = snap.ticker if snap and snap.ticker else None
+    if not ticker:
+        try:
+            from app.services.scraping.finance import resolve_and_fetch
+            ticker, _ = resolve_and_fetch(company.name, company.url)
+        except Exception:
+            ticker = None
+    if not ticker:
+        return {"labels": [], "prices": []}
+    # Fetch ~90 days history for a nicer chart
+    try:
+        import yfinance as yf
+        t = yf.Ticker(ticker)
+        hist = t.history(period='3mo', interval='1d')
+        if hist is None or hist.empty:
+            return {"labels": [], "prices": []}
+        closes = hist['Close'].dropna()
+        labels = [d.strftime('%Y-%m-%d') for d in closes.index.to_pydatetime()]
+        prices = [float(v) for v in closes.values]
+        return {"labels": labels, "prices": prices, "ticker": ticker}
+    except Exception:
+        return {"labels": [], "prices": []}
+
 @bp.route('/trends')
 def trends():
     return render_template('trends.html')
