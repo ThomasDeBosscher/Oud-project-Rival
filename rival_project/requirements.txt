@@ -14,4 +14,3 @@ gunicorn
 python-dotenv
 yfinance
 psycopg[binary]
-yfinance

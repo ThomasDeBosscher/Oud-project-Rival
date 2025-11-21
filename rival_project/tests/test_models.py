@@ -3,18 +3,22 @@ from app.models.event import Event
 from app.models.user import User
 from app.models.watchlist import Watchlist
 import pytest
+from datetime import datetime
 
 @pytest.fixture
 def sample_company():
-    return Company(name="Test Company", description="A company for testing.")
+    # description field no longer exists on canonical 'company' table mapping
+    return Company(name="Test Company", url="https://example.com")
 
 @pytest.fixture
 def sample_event():
-    return Event(title="Test Event", date="2023-01-01", company_id=1)
+    return Event(name="Test Event", date=datetime(2023, 1, 1))
 
 @pytest.fixture
 def sample_user():
-    return User(username="testuser", email="test@example.com", password="password")
+    u = User(username="testuser", email="test@example.com")
+    u.set_password("password")
+    return u
 
 @pytest.fixture
 def sample_watchlist(sample_user):
@@ -22,11 +26,11 @@ def sample_watchlist(sample_user):
 
 def test_company_creation(sample_company):
     assert sample_company.name == "Test Company"
-    assert sample_company.description == "A company for testing."
+    assert sample_company.url == "https://example.com"
 
 def test_event_creation(sample_event):
-    assert sample_event.title == "Test Event"
-    assert sample_event.date == "2023-01-01"
+    assert sample_event.name == "Test Event"
+    assert isinstance(sample_event.date, datetime)
 
 def test_user_creation(sample_user):
     assert sample_user.username == "testuser"

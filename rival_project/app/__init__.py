@@ -1,9 +1,9 @@
 from flask import Flask, session, g
 import os
-from app.config import Config
-from app.extensions import init_extensions, db
-from app.models.user import User
-from app.models.analytics import AppUser, Metric, Report, AuditLog, ChangeEvent
+from .config import Config
+from .extensions import init_extensions, db
+from .models.user import User
+from .models.analytics import Metric, Report, AuditLog, ChangeEvent
 from dotenv import load_dotenv
 
 # Load environment variables (e.g., DATABASE_URL, SECRET_KEY) from a .env file if present
@@ -13,22 +13,39 @@ def create_app(config_class: type = Config):
     app = Flask(__name__, static_folder="static", template_folder="templates")
     app.config.from_object(config_class)
 
+    # Normalize engine options based on the actual DB URI (important for tests overriding to sqlite)
+    uri = str(app.config.get('SQLALCHEMY_DATABASE_URI', ''))
+    if uri.startswith('sqlite:'):
+        app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+            'pool_pre_ping': True,
+        }
+    else:
+        app.config.setdefault('SQLALCHEMY_ENGINE_OPTIONS', {
+            'pool_pre_ping': True,
+            'pool_recycle': 300,
+            'pool_size': 5,
+            'max_overflow': 5,
+        })
+
     # DB, migrations, etc.
     init_extensions(app)
-    # Ensure new tables (like CompanyFinance) exist without requiring an immediate migration run
+    # Ensure new tables exist for local dev when using SQLite.
+    # We still avoid auto-creation for Postgres/Supabase unless explicitly allowed.
     with app.app_context():
-        # Prefer Alembic migrations; only fall back to create_all when no migrations present (fresh dev setup)
-        if not os.path.isdir(os.path.join(app.root_path, '..', 'migrations')):
+        uri_now = str(app.config.get('SQLALCHEMY_DATABASE_URI', ''))
+        if uri_now.startswith('sqlite:'):
+            db.create_all()
+        elif os.getenv('ALLOW_CREATE_ALL') == '1':
             db.create_all()
 
     # Blueprints
-    from app.blueprints.main import init_app as init_main
+    from .blueprints.main import init_app as init_main
     init_main(app)
-    from app.blueprints.auth import init_app as init_auth
+    from .blueprints.auth import init_app as init_auth
     init_auth(app)
-    from app.blueprints.api import init_app as init_api
+    from .blueprints.api import init_app as init_api
     init_api(app)
-    from app.blueprints.admin import init_app as init_admin
+    from .blueprints.admin import init_app as init_admin
     init_admin(app)
 
     @app.before_request

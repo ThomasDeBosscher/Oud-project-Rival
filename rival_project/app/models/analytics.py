@@ -1,19 +1,7 @@
-from app.extensions import db
+from ..extensions import db
 
 
-class AppUser(db.Model):
-    __tablename__ = 'app_user'
-
-    user_id = db.Column(db.BigInteger, primary_key=True)
-    username = db.Column(db.Text, nullable=False, unique=True)
-    email = db.Column(db.Text, nullable=False, unique=True)
-    role = db.Column(db.Text, db.CheckConstraint("role IN ('admin', 'analyst', 'viewer')"))
-    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
-
-    reports = db.relationship('Report', back_populates='user')
-
-    def __repr__(self):
-        return f"<AppUser {self.username}>"
+# Note: AppUser is represented by app.models.user.User to avoid duplicate mappings.
 
 
 class Metric(db.Model):
@@ -43,7 +31,7 @@ class Report(db.Model):
     user_id = db.Column(db.BigInteger, db.ForeignKey('app_user.user_id', ondelete="SET NULL"))
     company_id = db.Column(db.BigInteger, db.ForeignKey('company.company_id', ondelete="CASCADE"))
 
-    user = db.relationship('AppUser', back_populates='reports')
+    user = db.relationship('User')
     company = db.relationship('Company')
 
     def __repr__(self):

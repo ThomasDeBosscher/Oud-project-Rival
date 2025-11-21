@@ -1,8 +1,8 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash, session
-from app.extensions import db
-from app.models.company import Company
-from app.models.finance import CompanyFinance
-from app.models.watchlist import Watchlist
+from ...extensions import db
+from ...models.company import Company
+from ...models.finance import CompanyFinance
+from ...models.watchlist import Watchlist
 from .forms import CompanyForm, QuickAddForm, TickerForm
 from urllib.parse import urlparse
 from typing import Optional
@@ -42,7 +42,7 @@ def company_detail(company_id):
     snap = CompanyFinance.query.filter_by(company_id=company.id).first()
     if not snap or snap.is_stale:
         try:
-            from app.services.scraping.finance import resolve_and_fetch
+            from ...services.scraping.finance import resolve_and_fetch
             ticker, data = resolve_and_fetch(company.name, company.url)
         except Exception:
             ticker, data = None, None
@@ -67,7 +67,7 @@ def company_detail(company_id):
     # Even if not stale, try to compute transient change metrics from current market data
     if snap and getattr(snap, 'change_percent', None) is None and snap.ticker:
         try:
-            from app.services.scraping.finance import fetch_financials
+            from ...services.scraping.finance import fetch_financials
             tmp = fetch_financials(snap.ticker)
             if tmp:
                 snap.change_percent = tmp.get('change_percent')
@@ -103,7 +103,7 @@ def set_company_ticker(company_id):
 
     # Fetch data for provided ticker
     try:
-        from app.services.scraping.finance import fetch_financials
+        from ...services.scraping.finance import fetch_financials
         data = fetch_financials(ticker)
     except Exception:
         data = None
@@ -141,7 +141,7 @@ def compare():
         snap = CompanyFinance.query.filter_by(company_id=c.id).first()
         if not snap or snap.is_stale:
             try:
-                from app.services.scraping.finance import resolve_and_fetch
+                from ...services.scraping.finance import resolve_and_fetch
                 ticker, data = resolve_and_fetch(c.name, c.url)
             except Exception:
                 ticker, data = None, None
@@ -165,7 +165,7 @@ def compare():
         # Try to attach transient change metrics even if not stale
         if snap and getattr(snap, 'change_percent', None) is None and snap.ticker:
             try:
-                from app.services.scraping.finance import fetch_financials
+                from ...services.scraping.finance import fetch_financials
                 tmp = fetch_financials(snap.ticker)
                 if tmp:
                     snap.change_percent = tmp.get('change_percent')

@@ -1,11 +1,11 @@
-from app.extensions import db
+from ..extensions import db
 
 
 class Watchlist(db.Model):
     __tablename__ = 'watchlist'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.BigInteger, db.ForeignKey('app_user.user_id'), nullable=False)
     company_id = db.Column(db.BigInteger, db.ForeignKey('company.company_id'), nullable=False)
 
     user = db.relationship('User', backref=db.backref('watchlist_items', cascade='all, delete-orphan'))

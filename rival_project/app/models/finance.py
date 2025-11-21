@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from app.extensions import db
+from ..extensions import db
 
 
 class CompanyFinance(db.Model):
